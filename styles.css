@@ -1,0 +1,230 @@
+@font-face { font-family: 'Vazirmatn'; src: url('fonts/Vazirmatn-Regular.ttf') format('truetype'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Vazirmatn'; src: url('fonts/Vazirmatn-SemiBold.ttf') format('truetype'); font-weight: 600; font-display: swap; }
+@font-face { font-family: 'Vazirmatn'; src: url('fonts/Vazirmatn-Bold.ttf') format('truetype'); font-weight: 700; font-display: swap; }
+@font-face { font-family: 'Vazirmatn'; src: url('fonts/Vazirmatn-Black.ttf') format('truetype'); font-weight: 900; font-display: swap; }
+
+:root {
+  --blue: #2e90fa;
+  --blue-600: #1570ef;
+  --blue-50: #eaf4ff;
+  --blue-100: #d1e7ff;
+  --navy: #0b2545;
+  --navy-2: #13355f;
+  --ink: #0b2545;
+  --muted: #5b6b82;
+  --line: #e1e8f2;
+  --bg: #f2f6fb;
+  --card: #ffffff;
+  --green: #12b76a;
+  --green-50: #e8f8f0;
+  --amber: #f79009;
+  --amber-50: #fff6e6;
+  --red: #d92d20;
+  --red-50: #fdeeec;
+  --radius: 20px;
+  --shadow: 0 10px 30px rgba(11, 37, 69, .08), 0 2px 6px rgba(11, 37, 69, .05);
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  font-family: 'Vazirmatn', Tahoma, sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(1200px 500px at 50% -200px, #dcebff 0%, rgba(220, 235, 255, 0) 70%),
+    var(--bg);
+  line-height: 1.85;
+  font-size: 16px;
+  overflow-x: hidden;
+}
+
+.wrap { max-width: 480px; margin: 0 auto; padding: 16px 16px 32px; }
+
+/* ---------- سربرگ ---------- */
+.top {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  padding: 4px 2px 12px; color: var(--navy); font-size: 14px; font-weight: 600;
+}
+.brand { display: flex; align-items: center; gap: 8px; }
+.brand-dot {
+  width: 30px; height: 30px; border-radius: 9px; background: var(--navy);
+  display: grid; place-items: center; flex: none;
+}
+.brand-dot svg { width: 18px; height: 18px; }
+.top .tag { font-size: 12px; color: var(--muted); font-weight: 400; }
+
+/* ---------- نشانگر مرحله ---------- */
+.steps { display: flex; gap: 6px; margin: 0 0 14px; padding: 0; list-style: none; }
+.steps li { flex: 1; text-align: center; font-size: 12px; color: var(--muted); }
+.steps li::before {
+  content: ''; display: block; height: 6px; border-radius: 6px; background: var(--line); margin-bottom: 4px;
+  transition: background .35s ease;
+}
+.steps li.done::before, .steps li.now::before { background: var(--blue); }
+.steps li.now { color: var(--navy); font-weight: 700; }
+.steps[hidden] { display: none; }
+
+/* ---------- کارت و صفحه‌ها ---------- */
+.card {
+  background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);
+  overflow: hidden; position: relative;
+}
+.screen { display: none; padding: 22px 20px 24px; }
+.screen.active { display: block; animation: enter .45s cubic-bezier(.2, .8, .2, 1) both; }
+@keyframes enter { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+.hero {
+  margin: -22px -20px 18px; padding: 18px 20px 0;
+  background: linear-gradient(160deg, var(--navy) 0%, var(--navy-2) 60%, #1b4f8f 100%);
+  color: #fff; position: relative; overflow: hidden;
+}
+.hero svg.factory { display: block; width: 100%; height: auto; margin-top: 4px; }
+.hero .kicker { font-size: 13px; color: #b9d8ff; font-weight: 600; }
+.hero h1 { margin: 2px 0 0; font-size: 24px; line-height: 1.6; font-weight: 900; }
+
+h1, h2 { outline: none; }
+h2 { font-size: 21px; font-weight: 800; margin: 0 0 8px; line-height: 1.6; color: var(--navy); }
+p { margin: 0 0 12px; }
+.lead { color: var(--muted); font-size: 15px; }
+.muted { color: var(--muted); font-size: 14px; }
+
+.badge-icon {
+  width: 72px; height: 72px; border-radius: 50%; display: grid; place-items: center;
+  margin: 4px auto 14px; background: var(--blue-50);
+}
+.badge-icon svg { width: 38px; height: 38px; }
+.badge-icon.green { background: var(--green-50); }
+.badge-icon.amber { background: var(--amber-50); }
+.badge-icon.red { background: var(--red-50); }
+.center { text-align: center; }
+
+/* ---------- فرم ---------- */
+label.lbl { display: block; font-weight: 700; margin: 6px 0 8px; font-size: 15px; }
+.field {
+  width: 100%; font: inherit; font-size: 18px; color: var(--ink);
+  border: 2px solid var(--line); border-radius: 14px; background: #fbfdff;
+  padding: 12px 14px; min-height: 56px; outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+.field:focus { border-color: var(--blue); box-shadow: 0 0 0 4px rgba(46, 144, 250, .15); background: #fff; }
+.field.code { direction: ltr; text-align: left; letter-spacing: .06em; font-weight: 600; }
+.field.code::placeholder { letter-spacing: .04em; color: #a3b1c4; font-weight: 400; }
+.field[aria-invalid="true"] { border-color: var(--red); box-shadow: 0 0 0 4px rgba(217, 45, 32, .1); }
+select.field {
+  appearance: none; -webkit-appearance: none; font-size: 17px; cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%235b6b82' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: left 14px center; padding-left: 44px;
+}
+select.field:disabled { opacity: .55; cursor: not-allowed; }
+.hint { font-size: 13px; color: var(--muted); margin-top: 6px; }
+.err { color: var(--red); font-size: 14px; margin-top: 8px; min-height: 0; font-weight: 600; }
+.err:empty { display: none; }
+.gap { height: 14px; }
+
+/* ---------- دکمه‌ها ---------- */
+.btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  width: 100%; min-height: 56px; border: 0; border-radius: 14px;
+  font: inherit; font-size: 17px; font-weight: 800; cursor: pointer;
+  background: var(--blue); color: #fff; margin-top: 16px;
+  box-shadow: 0 6px 16px rgba(46, 144, 250, .32);
+  transition: transform .12s ease, background .2s, box-shadow .2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn:hover { background: var(--blue-600); }
+.btn:active { transform: scale(.98); }
+.btn:focus-visible { outline: 3px solid var(--navy); outline-offset: 3px; }
+.btn[disabled] { opacity: .7; cursor: progress; }
+.btn.ghost {
+  background: transparent; color: var(--navy); box-shadow: none; border: 2px solid var(--line);
+  font-weight: 700;
+}
+.btn.ghost:hover { background: var(--blue-50); border-color: var(--blue-100); }
+.btn.link {
+  background: none; box-shadow: none; color: var(--muted); font-weight: 600; font-size: 15px;
+  min-height: 44px; margin-top: 8px;
+}
+.btn.link:hover { color: var(--navy); background: none; }
+.btn .arrow { width: 20px; height: 20px; }
+
+.yesno { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 18px; }
+.yesno .btn { margin-top: 0; min-height: 64px; font-size: 19px; }
+.btn.yes { background: var(--green); box-shadow: 0 6px 16px rgba(18, 183, 106, .3); }
+.btn.yes:hover { background: #0e9f5c; }
+.btn.no { background: #fff; color: var(--navy); border: 2px solid var(--line); box-shadow: none; }
+.btn.no:hover { background: #f6f8fb; }
+
+.spinner {
+  width: 20px; height: 20px; border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, .45); border-top-color: #fff;
+  animation: spin .8s linear infinite;
+}
+.spinner.big { width: 48px; height: 48px; border-width: 5px; border-color: var(--blue-100); border-top-color: var(--blue); margin: 24px auto 16px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ---------- کارت روز بازدید ---------- */
+.daycard {
+  display: flex; align-items: center; gap: 14px; margin: 14px 0 6px;
+  border: 2px solid var(--blue-100); background: var(--blue-50); border-radius: 16px; padding: 12px 14px;
+}
+.cal {
+  width: 62px; flex: none; border-radius: 12px; overflow: hidden; background: #fff; text-align: center;
+  box-shadow: 0 2px 6px rgba(11, 37, 69, .08);
+}
+.cal b { display: block; background: var(--blue); color: #fff; font-size: 12px; padding: 2px 0; font-weight: 700; }
+.cal span { display: block; font-size: 26px; font-weight: 900; line-height: 1.5; color: var(--navy); }
+.daycard .t1 { font-weight: 800; font-size: 17px; }
+.daycard .t2 { font-size: 13px; color: var(--muted); }
+
+/* ---------- خلاصه ---------- */
+.summary { list-style: none; padding: 0; margin: 14px 0 4px; border: 1px solid var(--line); border-radius: 14px; }
+.summary li { display: flex; justify-content: space-between; gap: 12px; padding: 10px 14px; font-size: 15px; }
+.summary li + li { border-top: 1px solid var(--line); }
+.summary li span:first-child { color: var(--muted); }
+.summary li span:last-child { font-weight: 700; text-align: left; }
+
+.note {
+  border-radius: 14px; padding: 12px 14px; font-size: 14px; margin: 14px 0 0;
+  background: var(--amber-50); color: #7a4a00;
+}
+.note.info { background: var(--blue-50); color: var(--navy-2); }
+
+.name { color: var(--blue-600); }
+
+/* ---------- کاغذرنگی ---------- */
+.confetti { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.confetti i {
+  position: absolute; top: -12px; width: 8px; height: 12px; border-radius: 2px; opacity: 0;
+  animation: fall 2.6s ease-in forwards;
+}
+@keyframes fall {
+  0% { opacity: 1; transform: translateY(0) rotate(0); }
+  100% { opacity: 0; transform: translateY(420px) rotate(540deg); }
+}
+
+/* دود دودکش */
+.smoke { animation: smoke 4s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+.smoke.d2 { animation-delay: 1.3s; }
+.smoke.d3 { animation-delay: 2.6s; }
+@keyframes smoke {
+  0% { opacity: 0; transform: translateY(6px) scale(.6); }
+  30% { opacity: .9; }
+  100% { opacity: 0; transform: translateY(-22px) scale(1.4); }
+}
+
+footer { text-align: center; color: #8696ad; font-size: 12px; margin-top: 18px; }
+
+@media (max-width: 360px) {
+  .hero h1 { font-size: 21px; }
+  h2 { font-size: 19px; }
+  .screen { padding: 20px 16px 22px; }
+  .hero { margin: -20px -16px 16px; padding: 16px 16px 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
