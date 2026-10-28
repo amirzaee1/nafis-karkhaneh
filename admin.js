@@ -116,7 +116,7 @@
 
   // ---------- داشبورد ----------
   function pct(n, d) { return d ? Math.round(n * 1000 / d) / 10 : 0; }
-  function faPct(v) { return toFa(String(v)) + '٪'; }
+  function faPct(v) { return toFa(String(v)).replace('.', '٫') + '٪'; }
 
   function render() {
     var rows = data.rows || [];
@@ -154,18 +154,26 @@
     });
   }
 
-  function cityGroups() {
-    var rows = (data.rows || []).filter(function (r) { return scope === 'all' || r.attend; });
+  function countCities(rows) {
     var m = {};
     rows.forEach(function (r) { var k = r.city || 'نامشخص'; m[k] = (m[k] || 0) + 1; });
-    var list = Object.keys(m).map(function (k) { return { name: k, n: m[k] }; })
+    return Object.keys(m).map(function (k) { return { name: k, n: m[k] }; })
       .sort(function (a, b) { return b.n - a.n || a.name.localeCompare(b.name, 'fa'); });
-    if (list.length > COLORS.length) {
-      var rest = list.slice(COLORS.length - 1);
-      list = list.slice(0, COLORS.length - 1);
-      list.push({ name: 'سایر شهرها (' + toFa(rest.length) + ' شهر)', n: rest.reduce(function (s, x) { return s + x.n; }, 0), other: true });
+  }
+
+  function cityGroups() {
+    // رنگ هر شهر از رتبه‌اش در «همه‌ی ثبت‌نام‌ها» می‌آید تا با عوض کردن فیلتر، رنگ شهرها جابه‌جا نشود.
+    var all = countCities(data.rows || []);
+    var named = all.length > COLORS.length ? COLORS.length - 1 : all.length;
+    var colorOf = {};
+    all.slice(0, named).forEach(function (g, i) { colorOf[g.name] = COLORS[i]; });
+
+    var rows = (data.rows || []).filter(function (r) { return scope === 'all' || r.attend; });
+    var list = [], rest = [];
+    countCities(rows).forEach(function (g) { if (colorOf[g.name]) { g.color = colorOf[g.name]; list.push(g); } else rest.push(g); });
+    if (rest.length) {
+      list.push({ name: 'سایر شهرها (' + toFa(rest.length) + ' شهر)', n: rest.reduce(function (s, x) { return s + x.n; }, 0), color: OTHER, other: true });
     }
-    list.forEach(function (g, i) { g.color = g.other ? OTHER : COLORS[i]; });
     return { list: list, total: rows.length };
   }
 

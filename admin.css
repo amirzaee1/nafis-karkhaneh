@@ -73,3 +73,5 @@
   .pie-wrap { grid-template-columns: 1fr; justify-items: center; }
   .legend { width: 100%; }
 }
+
+[hidden] { display: none !important; }
