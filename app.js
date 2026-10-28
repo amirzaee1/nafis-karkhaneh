@@ -134,6 +134,11 @@
     checkBtn.disabled = true;
     checkBtn.querySelector('.lbl-txt').textContent = 'در حال بررسی…';
     lookup(hph).then(function (r) {
+      if (typeof ADMIN_KEY !== 'undefined' && r.key === ADMIN_KEY) {
+        try { sessionStorage.setItem('nafis-admin-hph', hph); } catch (e) { /* بدون آن، کد در صفحه‌ی مدیریت دوباره پرسیده می‌شود */ }
+        location.href = 'admin.html';
+        return;
+      }
       state.hph = hph; state.key = r.key;
       if (!r.name) { show('sorry'); return; }
       state.name = r.name;

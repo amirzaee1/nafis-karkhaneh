@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b2545">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<title>مدیریت بازدید نفیس</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b2545'/%3E%3Cpath d='M10 50V30l10-7v7l10-7v7l10-7v27z' fill='%232e90fa'/%3E%3Crect x='42' y='14' width='8' height='36' rx='2' fill='%23d1e7ff'/%3E%3Crect x='10' y='48' width='44' height='4' rx='2' fill='%23ffffff'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<div class="wrap admin">
+
+  <header class="top">
+    <div class="brand">
+      <span class="brand-dot" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M3 20V11l5-3.5V11l5-3.5V11l5-3.5V20z" fill="#2e90fa"/><rect x="17" y="3" width="3" height="9" rx="1" fill="#d1e7ff"/><rect x="3" y="19" width="18" height="2" rx="1" fill="#fff"/></svg>
+      </span>
+      <span>مدیریت بازدید کارخانه</span>
+    </div>
+    <button class="btn link small" type="button" id="btn-logout" hidden>خروج</button>
+  </header>
+
+  <!-- ورود -->
+  <main class="card login" id="login">
+    <h1 class="h1">ورود مدیر</h1>
+    <p class="muted">این بخش فقط برای مدیر است.</p>
+    <form id="f-login" novalidate>
+      <label class="lbl" for="a-hph">کد HPH مدیر</label>
+      <input class="field code" id="a-hph" type="text" autocomplete="username" autocapitalize="characters" spellcheck="false" dir="ltr" placeholder="HPH…">
+      <div id="pw-box" hidden>
+        <p class="note" id="pw-note"></p>
+        <label class="lbl" for="a-pw" id="pw-lbl">رمز</label>
+        <input class="field" id="a-pw" type="password" autocomplete="current-password" dir="ltr">
+        <div id="pw2-box" hidden>
+          <label class="lbl" for="a-pw2">تکرار رمز</label>
+          <input class="field" id="a-pw2" type="password" autocomplete="new-password" dir="ltr">
+        </div>
+      </div>
+      <p class="err" id="login-err" role="alert"></p>
+      <button class="btn" type="submit" id="btn-login"><span class="lbl-txt">ادامه</span></button>
+    </form>
+  </main>
+
+  <!-- داشبورد -->
+  <section id="dash" hidden>
+    <div class="toolbar">
+      <span class="muted small" id="updated"></span>
+      <button class="btn ghost small" type="button" id="btn-refresh">به‌روزرسانی</button>
+    </div>
+
+    <div class="tiles">
+      <div class="tile"><span class="t-lbl">ثبت‌نام کرده‌اند</span><b class="t-num" id="k-total">–</b><span class="t-sub" id="k-total-sub"></span></div>
+      <div class="tile yes"><span class="t-lbl">می‌آیند</span><b class="t-num" id="k-yes">–</b><span class="t-sub" id="k-yes-sub"></span></div>
+      <div class="tile no"><span class="t-lbl">نمی‌آیند</span><b class="t-num" id="k-no">–</b><span class="t-sub" id="k-no-sub"></span></div>
+      <div class="tile"><span class="t-lbl">هنوز جواب نداده‌اند</span><b class="t-num" id="k-wait">–</b><span class="t-sub">از واجدین شرایط</span></div>
+    </div>
+
+    <div class="card panel">
+      <h2 class="h2">ظرفیت هر روز</h2>
+      <div id="days"></div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head">
+        <h2 class="h2">سهم شهرها</h2>
+        <div class="seg" role="tablist" aria-label="کدام افراد">
+          <button type="button" role="tab" data-scope="all" aria-selected="true">همه‌ی ثبت‌نام‌ها</button>
+          <button type="button" role="tab" data-scope="yes" aria-selected="false">فقط کسانی که می‌آیند</button>
+        </div>
+      </div>
+      <div class="pie-wrap">
+        <div class="pie-box">
+          <svg id="pie" viewBox="0 0 200 200" role="img" aria-label="نمودار دایره‌ای سهم شهرها"></svg>
+          <div class="tip" id="tip" hidden></div>
+        </div>
+        <ul class="legend" id="legend"></ul>
+      </div>
+      <p class="muted small" id="pie-empty" hidden>هنوز کسی ثبت‌نام نکرده است.</p>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head">
+        <h2 class="h2">لیست ثبت‌نام‌ها</h2>
+        <input class="field search" id="q" type="search" placeholder="جست‌وجوی نام، شهر یا کد">
+      </div>
+      <div class="table-wrap">
+        <table class="tbl">
+          <thead><tr><th>نام</th><th>شهر</th><th>روز</th><th>حضور</th><th>وضعیت</th><th>زمان ثبت</th></tr></thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+</div>
+<script src="config.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>
